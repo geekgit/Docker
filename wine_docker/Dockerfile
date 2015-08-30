@@ -1,5 +1,5 @@
 FROM ubuntu:15.04
-MAINTAINER myself
+MAINTAINER geekgit
 RUN dpkg --add-architecture i386
 RUN apt-get update -y
 RUN apt-get upgrade -y
