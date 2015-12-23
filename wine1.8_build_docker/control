@@ -1,0 +1,6 @@
+Package: wine1.8-opt
+Architecture: i386
+Maintainer: geekgit
+Priority: optional
+Version: 1.8
+Description: custom wine 1.8 build
