@@ -21,7 +21,7 @@ RUN tar -xjf $PACKAGE.tar.bz2
 WORKDIR /home/build/$PACKAGE
 RUN echo "files hash (md5):"
 RUN find . -type f -exec md5sum {} + >> /home/build/hash-log.txt
-RUN ./configure --without-freetype --prefix=/opt/$PACKAGE &>/home/build/configure-log.txt
+RUN ./configure --prefix=/opt/$PACKAGE &>/home/build/configure-log.txt
 RUN make -j8 depend
 RUN make -j8
 USER root
