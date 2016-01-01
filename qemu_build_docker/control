@@ -1,0 +1,6 @@
+Package: qemu-opt
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 2.999-git
+Description: custom qemu git build
