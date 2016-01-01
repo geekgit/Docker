@@ -1,0 +1,6 @@
+Package: xqemu-git
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 2.999-git
+Description: xqemu build
