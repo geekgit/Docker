@@ -18,5 +18,7 @@ WORKDIR /home/build
 RUN git clone https://github.com/PCSX2/pcsx2
 WORKDIR /home/build/pcsx2
 RUN ./build.sh --dev --extra --clean -DWX28_API=TRUE -DSDL2_API=FALSE
+RUN cp -R bin pcsx2-git
+RUN tar -zcf pcsx2-git.tar.gz pcsx2-git
 ENTRYPOINT ["/bin/bash"]
 
