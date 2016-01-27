@@ -12,8 +12,8 @@ RUN useradd build
 USER build
 WORKDIR /home/build
 #try~
-ENV PACKAGE wine-1.9.0
-ENV URL https://dl.winehq.org/wine/source/1.9/wine-1.9.0.tar.bz2
+ENV PACKAGE wine-1.9.1
+ENV URL https://dl.winehq.org/wine/source/1.9/wine-1.9.1.tar.bz2
 RUN wget --secure-protocol=TLSv1_2 --https-only $URL
 RUN echo "$PACKAGE.tar.bz2 hash (md5, sha1, sha256, sha512)" >> /home/build/hash-log.txt
 RUN md5sum $PACKAGE.tar.bz2 >> /home/build/hash-log.txt && sha1sum $PACKAGE.tar.bz2 >> /home/build/hash-log.txt && sha256sum $PACKAGE.tar.bz2 >> /home/build/hash-log.txt && sha512sum $PACKAGE.tar.bz2 >> /home/build/hash-log.txt
