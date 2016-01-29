@@ -1,0 +1,53 @@
+FROM fedora:23
+MAINTAINER geekgit
+RUN dnf update -y
+RUN dnf groupinstall -y --best --allowerasing "Development Tools"
+RUN dnf groupinstall -y --best --allowerasing "C Development Tools and Libraries"
+RUN dnf install -y --best --allowerasing alien bzip2 dpkg fedora-packager git rpmrebuild tar wget libsodium-devel gnupg
+RUN useradd build
+USER build
+WORKDIR /home/build
+ENV DnsCryptArchive dnscrypt-proxy-1.6.0
+ENV PrefixName dnscrypt-opt
+RUN wget --secure-protocol=TLSv1_2 --https-only https://download.dnscrypt.org/dnscrypt-proxy/$DnsCryptArchive.tar.gz -O $DnsCryptArchive.tar.gz
+RUN wget --secure-protocol=TLSv1_2 --https-only https://download.dnscrypt.org/dnscrypt-proxy/$DnsCryptArchive.tar.gz.sig -O $DnsCryptArchive.tar.gz.sig
+RUN echo "$DnsCryptArchive.tar.gz" > /home/build/log.txt
+RUN echo "Signature:" >> /home/build/log.txt
+RUN gpg --keyserver keys.gnupg.net --recv-keys 0x2B6F76DA &>> /home/build/log.txt
+RUN gpg --verify $DnsCryptArchive.tar.gz.sig $DnsCryptArchive.tar.gz &>> /home/build/log.txt
+RUN echo "Hash:" >> /home/build/log.txt
+RUN echo "md5: $(md5sum $DnsCryptArchive.tar.gz | awk {'print $1'})" >> /home/build/log.txt
+RUN echo "sha1: $(sha1sum $DnsCryptArchive.tar.gz | awk {'print $1'})" >> /home/build/log.txt
+RUN echo "sha256: $(sha256sum $DnsCryptArchive.tar.gz | awk {'print $1'})" >> /home/build/log.txt
+RUN echo "sha512: $(sha512sum $DnsCryptArchive.tar.gz | awk {'print $1'})" >> /home/build/log.txt
+RUN tar -xvf $DnsCryptArchive.tar.gz
+WORKDIR /home/build/$DnsCryptArchive
+RUN echo "===============" >> /home/build/log.txt
+RUN echo "configure:" >> /home/build/log.txt
+RUN ./configure --prefix=/opt/$PrefixName &>> /home/build/log.txt
+RUN echo "===============" >> /home/build/log.txt
+RUN echo "make:" >> /home/build/log.txt
+RUN make -j8 &>> /home/build/log.txt
+USER root
+RUN make install
+WORKDIR /root
+RUN mkdir $PrefixName
+WORKDIR /root/$PrefixName
+RUN mkdir opt
+WORKDIR /root/$PrefixName/opt
+RUN mv /opt/$PrefixName $PrefixName
+WORKDIR /root/$PrefixName
+RUN mkdir DEBIAN
+WORKDIR /root/$PrefixName/DEBIAN
+ADD control control
+WORKDIR /root
+RUN dpkg --build $PrefixName
+RUN echo "===============" >> /home/build/log.txt
+RUN echo "$PrefixName.deb" >> /home/build/log.txt
+RUN echo "md5: $(md5sum $PrefixName.deb | awk {'print $1'})" >> /home/build/log.txt
+RUN echo "sha1: $(sha1sum $PrefixName.deb | awk {'print $1'})" >> /home/build/log.txt
+RUN echo "sha256: $(sha256sum $PrefixName.deb | awk {'print $1'})" >> /home/build/log.txt
+RUN echo "sha512: $(sha512sum $PrefixName.deb | awk {'print $1'})" >> /home/build/log.txt
+USER build
+WORKDIR /home/build
+ENTRYPOINT ["/bin/bash"]
