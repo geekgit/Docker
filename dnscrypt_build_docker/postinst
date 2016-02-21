@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+        if ! id -u "dnscrypt" >/dev/null 2>&1; then
+            useradd -r -m -d /home/dnscrypt -s /bin/false
+        fi
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+
+    *)
+        ;;
+esac
+
+exit 0

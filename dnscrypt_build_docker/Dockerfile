@@ -37,9 +37,23 @@ RUN mkdir opt
 WORKDIR /root/$PrefixName/opt
 RUN mv /opt/$PrefixName $PrefixName
 WORKDIR /root/$PrefixName
+RUN mkdir bin
+WORKDIR /root/$PrefixName/bin
+ADD dnscrypt-start dnscrypt-start
+WORKDIR /root/$PrefixName
+RUN mkdir lib
+WORKDIR /root/$PrefixName/lib
+RUN mkdir systemd
+WORKDIR /root/$PrefixName/lib/systemd
+RUN mkdir system
+WORKDIR /root/$PrefixName/lib/systemd/system
+ADD dnscrypt.service dnscrypt.service
+WORKDIR /root/$PrefixName
 RUN mkdir DEBIAN
 WORKDIR /root/$PrefixName/DEBIAN
 ADD control control
+ADD postinst postinst
+RUN chmod 0555 postinst
 WORKDIR /root
 RUN dpkg --build $PrefixName
 RUN echo "===============" >> /home/build/log.txt

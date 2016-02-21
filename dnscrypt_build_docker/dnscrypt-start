@@ -1,0 +1,2 @@
+#!/bin/bash
+/opt/dnscrypt-opt/sbin/dnscrypt-proxy -R dnscrypt.eu-dk -a 127.0.0.9:53 -u dnscrypt
