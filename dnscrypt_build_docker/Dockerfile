@@ -40,6 +40,7 @@ WORKDIR /root/$PrefixName
 RUN mkdir bin
 WORKDIR /root/$PrefixName/bin
 ADD dnscrypt-start dnscrypt-start
+RUN chmod a+rx-w dnscrypt-start
 WORKDIR /root/$PrefixName
 RUN mkdir lib
 WORKDIR /root/$PrefixName/lib
