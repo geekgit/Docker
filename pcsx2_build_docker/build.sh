@@ -2,7 +2,7 @@
 ContainerName="pcsx2_build_docker"
 TarGzName="pcsx2-git.tar.gz"
 echo "building image..."
-docker build -t $ContainerName ~/$ContainerName
+docker build -t $ContainerName $(pwd)
 echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "container id: $ID"

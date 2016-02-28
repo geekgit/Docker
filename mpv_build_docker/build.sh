@@ -2,7 +2,7 @@
 ContainerName="mpv_build_docker"
 BinName="mpv"
 echo "building image..."
-docker build -t $ContainerName ~/$ContainerName
+docker build -t $ContainerName $(pwd)
 echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "container id: $ID"

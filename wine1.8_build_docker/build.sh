@@ -2,7 +2,7 @@
 ContainerName="wine1.8_build_docker"
 ArchiveName="wine1.8.tar.gz"
 echo "building image..."
-docker build -t $ContainerName ~/$ContainerName
+docker build -t $ContainerName $(pwd)
 echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "container id: $ID"

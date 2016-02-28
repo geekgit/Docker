@@ -2,7 +2,7 @@
 ContainerName="libpng_build_docker"
 DebName="libpng-1.6.20.deb"
 echo "building image..."
-docker build -t $ContainerName ~/$ContainerName
+docker build -t $ContainerName $(pwd)
 echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "container id: $ID"

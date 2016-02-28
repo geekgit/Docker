@@ -2,7 +2,7 @@
 ContainerName="qemu_build_docker"
 DebName="qemu-git.deb"
 echo "building image..."
-docker build -t $ContainerName ~/$ContainerName
+docker build -t $ContainerName $(pwd)
 echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "container id: $ID"
