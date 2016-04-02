@@ -1,0 +1,6 @@
+Package: nginx-opt-ubuntu
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 1.9.13
+Description: custom nginx 1.9.13 build (ubuntu)
