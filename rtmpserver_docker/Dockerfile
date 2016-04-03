@@ -18,6 +18,10 @@ RUN cat rtmp.conf >> /opt/nginx-opt-ubuntu/conf/nginx.conf
 RUN ln -sf /opt/nginx-opt-ubuntu/conf/nginx.conf /etc/nginx/nginx.conf
 ADD nginx-start.sh /sbin/nginx-start
 RUN chmod a+rx-w /sbin/nginx-start
+ADD nginx-stop.sh /sbin/nginx-stop
+RUN chmod a+rx-w /sbin/nginx-stop
+ADD nginx-restart.sh /sbin/nginx-restart
+RUN chmod a+rx-w /sbin/nginx-restart
 #RUN adduser --disabled-password --gecos '' user
 #USER user
 #WORKDIR /home/user
