@@ -9,7 +9,7 @@ WORKDIR /home/build
 RUN git clone https://github.com/mutability/rtl-sdr
 WORKDIR /home/build/rtl-sdr
 RUN autoreconf -i
-RUN ./configure --prefix=/opt/rtlsdr-mod
+RUN ./configure --prefix=/opt/rtlsdr-mod --enable-driver-detach
 RUN make -j8
 USER root
 RUN make install
