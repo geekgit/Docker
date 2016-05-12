@@ -1,0 +1,6 @@
+Package: ffmpeg-opt
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 3.0.2
+Description: custom ffmpeg 3.0.2 build (ubuntu)
