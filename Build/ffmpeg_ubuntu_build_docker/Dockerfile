@@ -4,6 +4,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properti
 RUN apt-get install -y build-essential unzip wget gnupg git
 RUN apt-get install -y autoconf automake build-essential libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo zlib1g-dev
 RUN apt-get install -y yasm libx264-dev cmake mercurial libmp3lame-dev libopus-dev libvpx-dev
+RUN apt-get install -y sudo
 # Under construction
 # TODO: libx265
 # TODO: fdk-aac
@@ -30,5 +31,20 @@ RUN cat /home/build/ffmpeg-file-log.txt
 USER root
 RUN make install
 USER build
-# TODO: deb package
+# geekgit linux_scripts_meta install
+WORKDIR /home/build/
+RUN git clone https://github.com/geekgit/linux_scripts_meta
+WORKDIR /home/build/linux_scripts_meta
+USER root
+RUN ./download-all.sh
+# build deb
+WORKDIR /root
+ADD control /root/control
+RUN mkdir /root/opt
+RUN mv /opt/$ffmpegVersion-opt /root/opt/
+RUN geekgit-devel-create-deb /root/opt /root/control
+RUN chmod a+rx-w /root/ffmpeg-opt.deb
+RUN cp /root/ffmpeg-opt.deb /home/build
+USER build
+WORKDIR /home/build
 ENTRYPOINT ["/bin/bash"]
