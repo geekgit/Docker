@@ -6,10 +6,23 @@ RUN apt-get install -y autoconf automake build-essential libass-dev libfreetype6
 RUN apt-get install -y yasm libx264-dev cmake mercurial libmp3lame-dev libopus-dev libvpx-dev
 RUN apt-get install -y sudo
 # Under construction
-# TODO: libx265
-# TODO: fdk-aac
-# TODO: nvenc
-# TODO: + more codecs
+# geekgit linux_scripts_meta install
+WORKDIR /root
+RUN git clone https://github.com/geekgit/linux_scripts_meta
+WORKDIR /root/linux_scripts_meta
+RUN ./download-all.sh
+WORKDIR /root
+RUN add-apt-repository multiverse
+# mpv/ffmpeg ppa
+RUN geekgit-install-ppa-mpv-xenial
+# x265 & fdk
+RUN apt-get install -y libx265-dev libfdk-aac-dev
+# nv stuff
+RUN apt-get -y install dkms
+# cuda.run from nv dev site
+ADD cuda_7.5.18_linux.run cuda_7.5.18_linux.run
+RUN chmod +x cuda_7.5.18_linux.run
+RUN ./cuda_7.5.18_linux.run --silent --override --toolkit --samples --no-opengl-libs --verbose
 RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
@@ -21,8 +34,10 @@ RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffm
 RUN gpg --verify $ffmpegVersion.tar.gz.asc $ffmpegVersion.tar.gz 2> /home/build/gpg-check-log.txt
 RUN tar zvxf $ffmpegVersion.tar.gz
 WORKDIR /home/build/$ffmpegVersion
-RUN ./configure --prefix=/opt/$ffmpegVersion-opt --enable-gpl --enable-nonfree --enable-libx264 --enable-libmp3lame \
---enable-libass --enable-libfreetype 1> /home/build/configure-log.txt
+RUN find / -type f | grep nvEncodeAPI
+RUN ./configure --prefix=/opt/$ffmpegVersion-opt --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libfdk-aac \
+--enable-libmp3lame --enable-libass --enable-libfreetype --enable-nvenc
+#1> /home/build/configure-log.txt
 RUN cat /home/build/gpg-check-log.txt
 RUN cat /home/build/configure-log.txt
 RUN make -j8
@@ -31,12 +46,6 @@ RUN cat /home/build/ffmpeg-file-log.txt
 USER root
 RUN make install
 USER build
-# geekgit linux_scripts_meta install
-WORKDIR /home/build/
-RUN git clone https://github.com/geekgit/linux_scripts_meta
-WORKDIR /home/build/linux_scripts_meta
-USER root
-RUN ./download-all.sh
 # build deb
 WORKDIR /root
 ADD control /root/control
