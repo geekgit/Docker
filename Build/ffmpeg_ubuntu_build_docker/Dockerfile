@@ -20,9 +20,15 @@ RUN apt-get install -y libx265-dev libfdk-aac-dev
 # nv stuff
 RUN apt-get -y install dkms
 # cuda.run from nv dev site
-ADD cuda_7.5.18_linux.run cuda_7.5.18_linux.run
-RUN chmod +x cuda_7.5.18_linux.run
-RUN ./cuda_7.5.18_linux.run --silent --override --toolkit --samples --no-opengl-libs --verbose
+ENV CudaUrl http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run
+RUN wget $CudaUrl -O cuda.run
+RUN chmod +x cuda.run
+RUN ./cuda.run --silent --override --toolkit --samples --no-opengl-libs --verbose
+ENV NvencUrl http://developer.download.nvidia.com/assets/cuda/files/nvidia_video_sdk_6.0.1.zip
+RUN wget http://developer.download.nvidia.com/assets/cuda/files/nvidia_video_sdk_6.0.1.zip -O nv-enc-sdk.zip
+RUN unzip nv-enc-sdk.zip
+RUN find . -type f -name "nv*.h" -exec cp {} /usr/include \;
+RUN find . -type f -name "Nv*.h" -exec cp {} /usr/include \;
 RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
@@ -34,10 +40,8 @@ RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffm
 RUN gpg --verify $ffmpegVersion.tar.gz.asc $ffmpegVersion.tar.gz 2> /home/build/gpg-check-log.txt
 RUN tar zvxf $ffmpegVersion.tar.gz
 WORKDIR /home/build/$ffmpegVersion
-RUN find / -type f | grep nvEncodeAPI
 RUN ./configure --prefix=/opt/$ffmpegVersion-opt --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libfdk-aac \
---enable-libmp3lame --enable-libass --enable-libfreetype --enable-nvenc
-#1> /home/build/configure-log.txt
+--enable-libmp3lame --enable-libass --enable-libfreetype --enable-nvenc 1> /home/build/configure-log.txt
 RUN cat /home/build/gpg-check-log.txt
 RUN cat /home/build/configure-log.txt
 RUN make -j8
@@ -45,7 +49,6 @@ RUN file ffmpeg 1> /home/build/ffmpeg-file-log.txt
 RUN cat /home/build/ffmpeg-file-log.txt
 USER root
 RUN make install
-USER build
 # build deb
 WORKDIR /root
 ADD control /root/control
