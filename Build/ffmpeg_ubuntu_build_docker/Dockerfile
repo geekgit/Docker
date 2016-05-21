@@ -40,11 +40,13 @@ RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffm
 RUN gpg --verify $ffmpegVersion.tar.gz.asc $ffmpegVersion.tar.gz 2> /home/build/gpg-check-log.txt
 RUN tar zvxf $ffmpegVersion.tar.gz
 WORKDIR /home/build/$ffmpegVersion
-RUN ./configure --prefix=/opt/$ffmpegVersion-opt --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libfdk-aac \
---enable-libmp3lame --enable-libass --enable-libfreetype --enable-nvenc 1> /home/build/configure-log.txt
+RUN ./configure --prefix=/opt/$ffmpegVersion-opt --pkg-config-flags="--static" --libdir=/usr/local/lib --enable-static --disable-shared \
+--enable-gpl --enable-nonfree --enable-libx264 --enable-libfdk-aac \
+--enable-libmp3lame --enable-libass --enable-libfreetype --enable-nvenc \
+--enable-runtime-cpudetect 1>/home/build/configure-log.txt
 RUN cat /home/build/gpg-check-log.txt
 RUN cat /home/build/configure-log.txt
-RUN make -j8
+RUN make -j$(nproc --all)
 RUN file ffmpeg 1> /home/build/ffmpeg-file-log.txt
 RUN cat /home/build/ffmpeg-file-log.txt
 USER root
