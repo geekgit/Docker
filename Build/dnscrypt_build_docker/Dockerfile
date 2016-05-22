@@ -27,7 +27,7 @@ RUN echo "configure:" >> /home/build/log.txt
 RUN ./configure --prefix=/opt/$PrefixName &>> /home/build/log.txt
 RUN echo "===============" >> /home/build/log.txt
 RUN echo "make:" >> /home/build/log.txt
-RUN make -j8 &>> /home/build/log.txt
+RUN make -j$(nproc --all) &>> /home/build/log.txt
 USER root
 RUN make install
 WORKDIR /root

@@ -10,7 +10,7 @@ WORKDIR /home/build
 RUN git clone https://github.com/espes/xqemu.git
 WORKDIR /home/build/xqemu
 RUN ./configure --python=python2 --enable-opengl --disable-vnc --disable-user --enable-kvm --disable-xen --audio-drv-list=alsa --target-list=xbox-softmmu --extra-cflags="-march=native" --disable-werror --enable-debug --prefix=/opt/xqemu-git
-RUN make -j8
+RUN make -j$(nproc --all)
 USER root
 RUN make install
 RUN mkdir /root/xqemu-git/ && mkdir /root/xqemu-git/opt/

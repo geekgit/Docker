@@ -17,7 +17,7 @@ WORKDIR /home/build/pi
 RUN git clone -b rpi https://github.com/Torlus/qemu
 WORKDIR /home/build/pi/qemu
 RUN ./configure --prefix=/opt/qemu-rpi-git --target-list=arm-softmmu,arm-linux-user,armeb-linux-user --extra-cflags=-Wno-error
-RUN make -j8
+RUN make -j$(nproc --all)
 USER root
 RUN make install
 WORKDIR /root

@@ -15,7 +15,7 @@ RUN tar -zxvf nginx-1.9.13.tar.gz
 RUN unzip rtmp.zip
 WORKDIR /home/build/nginx-1.9.13
 RUN  ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module-master --prefix=/opt/nginx-opt-ubuntu 2>&1 1>/home/build/configure.log
-RUN make -j8
+RUN make -j$(nproc --all)
 USER root
 RUN make install
 #build

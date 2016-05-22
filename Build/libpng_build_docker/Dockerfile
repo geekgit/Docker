@@ -23,7 +23,7 @@ RUN dnf install -y zlib zlib-devel
 RUN dnf install -y dpkg
 USER build
 RUN ./configure --prefix=/opt/libpng-1.6.20
-RUN make -j8
+RUN make -j$(nproc --all)
 USER root
 RUN make install
 RUN ls -l /opt/libpng-1.6.20

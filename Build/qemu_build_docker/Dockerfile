@@ -15,7 +15,7 @@ WORKDIR /home/build
 RUN git clone git://git.qemu.org/qemu.git
 WORKDIR /home/build/qemu
 RUN ./configure --prefix=/opt/qemu-git/
-RUN make -j8
+RUN make -j$(nproc --all)
 USER root
 RUN make install
 WORKDIR /opt/

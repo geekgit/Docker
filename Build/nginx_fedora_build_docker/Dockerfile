@@ -15,7 +15,7 @@ RUN tar -zxvf $NginxVersion.tar.gz
 RUN wget --secure-protocol=TLSv1_2 --https-only https://github.com/arut/nginx-rtmp-module/archive/master.zip -O rtmp.zip && unzip rtmp.zip
 WORKDIR /home/build/$NginxVersion
 RUN ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module-master --prefix=/opt/nginx-opt &> /home/build/configure.log
-RUN make -j8
+RUN make -j$(nproc --all)
 USER root
 RUN make install
 WORKDIR /root

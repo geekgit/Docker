@@ -17,5 +17,5 @@ RUN git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
 RUN git clone http://anongit.freedesktop.org/git/fribidi/fribidi.git fribidi
 RUN git clone https://github.com/libass/libass.git libass
 RUN git clone https://github.com/mpv-player/mpv.git mpv
-RUN ./rebuild -j8
+RUN ./rebuild -j$(nproc --all)
 ENTRYPOINT ["/bin/bash"]
