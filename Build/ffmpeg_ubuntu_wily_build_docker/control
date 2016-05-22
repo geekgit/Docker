@@ -1,0 +1,6 @@
+Package: ffmpeg-3.0.2-wily
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 3.0.2-wily
+Description: custom ffmpeg 3.0.2 build (ubuntu 15.10, codename wily)
