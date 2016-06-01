@@ -7,7 +7,7 @@ RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
 RUN gpg -q --keyserver pgp.mit.edu --recv-keys A1C052F8
-ENV NginxVersion 1.9.13
+ENV NginxVersion 1.10.1
 ENV NginxName nginx-$NginxVersion
 RUN wget http://nginx.org/download/$NginxName.tar.gz
 RUN wget http://nginx.org/download/$NginxName.tar.gz.asc
