@@ -1,5 +1,5 @@
 #!/bin/bash
-PathToOpt="/opt/wine-1.8.3/bin"
+PathToOpt="/opt/wine-1.8.4/bin"
 OriginalPath="/usr/bin"
 Filenames="msidb msiexec notepad regedit regsvr32 dil wine wineboot winebuild winecfg wineconsole winecpp winedb winedump winefile wineg++ winegcc winemaker winemine winepath wine-preloader wineserver wmc wrc"
 arr=($Filenames)
