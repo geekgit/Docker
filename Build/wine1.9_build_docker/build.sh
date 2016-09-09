@@ -1,6 +1,6 @@
 #!/bin/bash
 ContainerName="wine1.9_build_docker"
-ArchiveName="wine1.9.17.tar.gz"
+ArchiveName="wine1.9.18.tar.gz"
 echo "building image..."
 docker build -t $ContainerName $(pwd)
 echo "starting container..."
