@@ -1,6 +1,6 @@
-Package: wine1.9.15-opt
+Package: wine1.9.16-opt
 Architecture: i386
 Maintainer: geekgit
 Priority: optional
-Version: 1.9.15
-Description: custom wine 1.9.15 build
+Version: 1.9.16
+Description: custom wine 1.9.16 build
