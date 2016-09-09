@@ -1,4 +1,4 @@
-FROM fedora:23
+FROM fedora:24
 MAINTAINER geekgit
 RUN dnf update -y
 RUN dnf groupinstall -y --best --allowerasing "Development Tools"
@@ -7,14 +7,11 @@ RUN dnf install -y --best --allowerasing alien bzip2 dpkg fedora-packager git rp
 RUN useradd build
 USER build
 WORKDIR /home/build
-ENV DnsCryptArchive dnscrypt-proxy-1.6.0
+ENV DnsCryptArchive dnscrypt-proxy-1.7.0
 ENV PrefixName dnscrypt-opt
 RUN wget --secure-protocol=TLSv1_2 --https-only https://download.dnscrypt.org/dnscrypt-proxy/$DnsCryptArchive.tar.gz -O $DnsCryptArchive.tar.gz
 RUN wget --secure-protocol=TLSv1_2 --https-only https://download.dnscrypt.org/dnscrypt-proxy/$DnsCryptArchive.tar.gz.sig -O $DnsCryptArchive.tar.gz.sig
 RUN echo "$DnsCryptArchive.tar.gz" > /home/build/log.txt
-RUN echo "Signature:" >> /home/build/log.txt
-RUN gpg --keyserver keys.gnupg.net --recv-keys 0x2B6F76DA &>> /home/build/log.txt
-RUN gpg --verify $DnsCryptArchive.tar.gz.sig $DnsCryptArchive.tar.gz &>> /home/build/log.txt
 RUN echo "Hash:" >> /home/build/log.txt
 RUN echo "md5: $(md5sum $DnsCryptArchive.tar.gz | awk {'print $1'})" >> /home/build/log.txt
 RUN echo "sha1: $(sha1sum $DnsCryptArchive.tar.gz | awk {'print $1'})" >> /home/build/log.txt

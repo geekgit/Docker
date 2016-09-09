@@ -2,6 +2,6 @@ Package: dnscrypt-opt
 Architecture: amd64
 Maintainer: geekgit
 Priority: optional
-Version: 1.6.0
-Depends: libsodium13, libc6, adduser
-Description: custom dnscrypt 1.6.0 build
+Version: 1.7.0
+Depends: libsodium18, libc6, adduser
+Description: custom dnscrypt 1.7.0 build for xenial
