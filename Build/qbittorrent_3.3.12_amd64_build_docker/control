@@ -1,0 +1,7 @@
+Package: qbittorrent-3.3.12-opt
+Architecture: amd64
+Maintainer: geekgit
+Depends: qbittorrent, libboost-system1.58.0, libc6 (>= 2.14), libgcc1 (>= 1:3.0), libqt5core5a (>= 5.5.1), libqt5dbus5 (>= 5.0.2), libqt5gui5 (>= 5.0.2) | libqt5gui5-gles (>= 5.0.2), libqt5network5 (>= 5.2.0), libqt5widgets5 (>= 5.2.0), libqt5xml5 (>= 5.0.2), libstdc++6 (>= 5.2), libtorrent-rasterbar8 (>= 1.0.11+git20172002.ecd20f15cb), zlib1g (>= 1:1.1.4), python (>= 2.7), geoip-database
+Priority: optional
+Version: 3.3.12
+Description: custom qbittorrent 3.3.12 build (ubuntu)
