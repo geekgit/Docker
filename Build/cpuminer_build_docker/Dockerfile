@@ -1,4 +1,4 @@
-FROM fedora:23
+FROM fedora:26
 MAINTAINER geekgit
 RUN dnf update -y
 RUN dnf install -y --best --allowerasing @development-tools
