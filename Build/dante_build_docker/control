@@ -1,0 +1,7 @@
+Package: dante-server-opt
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 1.4.2
+Depends: libc6 (>= 2.17), libpam0g (>= 0.99.7.1), libwrap0 (>= 7.6-4~), lsb-base
+Description: custom dante 1.4.2 build for xenial
