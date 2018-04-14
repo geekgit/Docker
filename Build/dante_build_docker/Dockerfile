@@ -1,9 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER geekgit
 RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
-RUN apt-get install -y build-essential libwrap0 libwrap0-dev
-RUN apt-get install -y git
-RUN apt-get install -y sudo wget
+RUN apt-get install -y build-essential git libwrap0 libwrap0-dev sudo wget
 WORKDIR /root
 RUN git clone https://github.com/geekgit/linux_scripts_meta
 WORKDIR /root/linux_scripts_meta
