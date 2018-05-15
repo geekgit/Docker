@@ -1,3 +1,4 @@
+# Tested: 4 cores + 8 GB RAM + 4 GB swap
 FROM ubuntu:16.04
 MAINTAINER geekgit
 RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
@@ -24,5 +25,5 @@ WORKDIR /home/build/tdlib/td-$TdlibVersion
 RUN mkdir build
 WORKDIR /home/build/tdlib/td-$TdlibVersion/build
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
-RUN cmake --build . -- -j $(nproc --all)
+RUN cmake --build . -- -j $(expr $(nproc --all) / 2)
 ENTRYPOINT ["/bin/bash"]
