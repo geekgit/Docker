@@ -7,9 +7,7 @@ ID=$(docker create $ContainerName)
 echo "container id: $ID"
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
-#docker cp $ID:/home/build/tdlib.tar.gz $HOME/$ContainerName-share/tdlib.tar.gz
-# or
-#docker cp $ID:/home/build/tdlib.7z $HOME/$ContainerName-share/tdlib.7z
+docker cp $ID:/home/build/tdlib.7z $HOME/$ContainerName-share/tdlib.7z
 echo "docker removing container..."
 docker rm -v $ID
 echo "container removed."

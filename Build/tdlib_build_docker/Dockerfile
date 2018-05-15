@@ -26,4 +26,7 @@ RUN mkdir build
 WORKDIR /home/build/tdlib/td-$TdlibVersion/build
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
 RUN cmake --build . -- -j $(expr $(nproc --all) / 2)
+WORKDIR /home/build/tdlib/td-$TdlibVersion
+RUN 7z a -t7z -mx9 tdlib.7z build
+RUN mv tdlib.7z /home/build
 ENTRYPOINT ["/bin/bash"]
