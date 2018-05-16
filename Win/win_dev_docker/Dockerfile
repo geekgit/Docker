@@ -59,7 +59,19 @@ RUN .\Bin\MSBuild.exe -version
 WORKDIR 'C:\installers\vcpkg'
 USER ContainerUser
 # TODO: fix "C:\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Default.props"
-#RUN .\bootstrap-vcpkg.bat
+# Actually:
+# C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Default.props
+# C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v140\Microsoft.Cpp.Default.props
+# so...
+WORKDIR 'C:\'
+RUN ls
+USER ContainerAdministrator
+# C:\Common7\ <-> C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\
+RUN cmd /c mklink /d Common7 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7'
+WORKDIR 'C:\installers\vcpkg'
+USER ContainerUser
+# Fail: error MSB6006: "CL.exe" exited with code -1073741515. [C:\installers\vcpkg\toolsrc\vcpkglib\vcpkglib.vcxproj]
+RUN .\bootstrap-vcpkg.bat
 #USER ContainerAdministrator
 #RUN .\vcpkg integrate install
 #RUN .\vcpkg integrate powershell
