@@ -26,8 +26,14 @@ RUN Install-PackageProvider ChocolateyGet -Force
 RUN Import-PackageProvider ChocolateyGet -Force
 RUN Find-Package -ProviderName ChocolateyGet -name nodejs
 RUN Install-Package -ProviderName ChocolateyGet -name nodejs -Force
+RUN Install-Package -ProviderName ChocolateyGet -name cmake -Force
+RUN [Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\CMake\bin', [EnvironmentVariableTarget]::Machine)
+USER ContainerUser
+RUN (New-Object System.Net.WebClient).DownloadFile('https://netcologne.dl.sourceforge.net/project/gnuwin32/gperf/3.0.1/gperf-3.0.1.exe','gperf-setup.exe')
+USER ContainerAdministrator
+RUN Start-Process -FilePath 'gperf-setup.exe' -ArgumentList '/VerySilent','/SuppressMsgBoxes','/NoRestart' -Wait
+RUN [Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files (x86)\GnuWin32\bin', [EnvironmentVariableTarget]::Machine)
 # run some admin stuff
 USER ContainerUser
-# test
 WORKDIR 'C:\build'
 ENTRYPOINT ["powershell"]
