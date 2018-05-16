@@ -58,6 +58,7 @@ RUN cmd /c mklink /d Bin 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Co
 RUN .\Bin\MSBuild.exe -version
 WORKDIR 'C:\installers\vcpkg'
 USER ContainerUser
+# TODO: fix "C:\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Default.props"
 #RUN .\bootstrap-vcpkg.bat
 #USER ContainerAdministrator
 #RUN .\vcpkg integrate install
