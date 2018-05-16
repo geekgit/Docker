@@ -33,6 +33,7 @@ RUN (New-Object System.Net.WebClient).DownloadFile('https://netcologne.dl.source
 USER ContainerAdministrator
 RUN Start-Process -FilePath 'gperf-setup.exe' -ArgumentList '/VerySilent','/SuppressMsgBoxes','/NoRestart' -Wait
 RUN [Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files (x86)\GnuWin32\bin', [EnvironmentVariableTarget]::Machine)
+RUN Install-Package -ProviderName ChocolateyGet -name git -Force
 # run some admin stuff
 USER ContainerUser
 WORKDIR 'C:\build'
