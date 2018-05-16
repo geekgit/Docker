@@ -34,7 +34,22 @@ USER ContainerAdministrator
 RUN Start-Process -FilePath 'gperf-setup.exe' -ArgumentList '/VerySilent','/SuppressMsgBoxes','/NoRestart' -Wait
 RUN [Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files (x86)\GnuWin32\bin', [EnvironmentVariableTarget]::Machine)
 RUN Install-Package -ProviderName ChocolateyGet -name git -Force
-# run some admin stuff
 USER ContainerUser
-WORKDIR 'C:\build'
+RUN (New-Object System.Net.WebClient).DownloadFile('https://aka.ms/vs/15/release/vs_community.exe','vs_community.exe')
+USER ContainerAdministrator
+RUN Start-Process -FilePath 'vs_community.exe' -ArgumentList '--add Microsoft.VisualStudio.Component.VC.140', '--add Microsoft.VisualStudio.Component.VC.CoreIde', '--add Microsoft.Component.MSBuild', '--Quiet', '--Wait', '--NoRestart', '--NoUpdateInstaller' -Wait
+RUN choco install -y visualcpp-build-tools 
+RUN Start-Process -FilePath 'vs_community.exe' -ArgumentList '--add Microsoft.VisualStudio.Component.Windows10SDK', '--Quiet', '--Wait', '--NoRestart', '--NoUpdateInstaller' -Wait
+RUN Start-Process -FilePath 'vs_community.exe' -ArgumentList '--add Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop', '--add Microsoft.VisualStudio.Component.Windows10SDK.16299.UWP', '--add Microsoft.VisualStudio.Component.Windows10SDK.16299.UWP.Native', '--Quiet', '--Wait', '--NoRestart', '--NoUpdateInstaller' -Wait
+USER ContainerUser
+RUN git clone https://github.com/Microsoft/vcpkg
+WORKDIR 'C:\installers\vcpkg'
+#TODO: fix getProgramFiles32bit
+#RUN .\bootstrap-vcpkg.bat
+#USER ContainerAdministrator
+#RUN .\vcpkg integrate install
+#RUN .\vcpkg integrate powershell
+# run some admin stuff
+#USER ContainerUser
+#WORKDIR 'C:\build'
 ENTRYPOINT ["powershell"]
