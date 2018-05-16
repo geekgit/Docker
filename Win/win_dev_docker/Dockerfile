@@ -44,7 +44,20 @@ RUN Start-Process -FilePath 'vs_community.exe' -ArgumentList '--add Microsoft.Vi
 USER ContainerUser
 RUN git clone https://github.com/Microsoft/vcpkg
 WORKDIR 'C:\installers\vcpkg'
-#TODO: fix getProgramFiles32bit
+USER ContainerAdministrator
+WORKDIR 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules'
+RUN mkdir fix
+WORKDIR 'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\fix'
+ADD fix.psm1 fix.psm1
+WORKDIR \
+RUN Import-Module fix
+# Link C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\ <-> C:\Program Files (x86)\MSBuild\14.0\Bin\
+RUN New-Item -ItemType Directory -Force -Path 'C:\Program Files (x86)\MSBuild\14.0\'
+WORKDIR 'C:\Program Files (x86)\MSBuild\14.0\'
+RUN cmd /c mklink /d Bin 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin'
+RUN .\Bin\MSBuild.exe -version
+WORKDIR 'C:\installers\vcpkg'
+USER ContainerUser
 #RUN .\bootstrap-vcpkg.bat
 #USER ContainerAdministrator
 #RUN .\vcpkg integrate install
