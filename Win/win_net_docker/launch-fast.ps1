@@ -1,0 +1,1 @@
+docker run -ti --rm win_net_docker powershell
