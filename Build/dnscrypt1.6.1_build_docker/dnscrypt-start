@@ -1,0 +1,11 @@
+#!/bin/bash
+BinPath="/opt/dnscrypt-opt/sbin/dnscrypt-proxy"
+LogFile="/var/log/dnscrypt-opt.log"
+Date="$(date)"
+Server="dnscrypt.org-fr"
+Addr="127.0.0.9:53"
+DNSUser="dnscrypt"
+echo "" &> "$LogFile"
+echo "$Date" &>> "$LogFile"
+chmod a+r-wx "$LogFile"
+nohup "$BinPath" -R "$Server" -a "$Addr" -u "$DNSUser" &>> "$LogFile"
