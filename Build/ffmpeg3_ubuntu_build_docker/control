@@ -1,0 +1,6 @@
+Package: ffmpeg3.4.4-opt
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 3.4.4
+Description: custom ffmpeg 3.4.4 build (ubuntu)
