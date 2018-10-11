@@ -1,0 +1,6 @@
+Package: ffmpeg2.8.15-opt
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 2.8.15
+Description: custom ffmpeg 2.8.15 build (ubuntu)
