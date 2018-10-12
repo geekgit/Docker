@@ -1,0 +1,7 @@
+Package: dante-server1.1.19-opt
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 1.1.19
+Depends: libc6, libpam0g, libwrap0, lsb-base
+Description: custom dante 1.1.19 build
