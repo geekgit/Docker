@@ -1,0 +1,6 @@
+Package: cpuminer-git
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 1.999
+Description: custom cpuminer build
