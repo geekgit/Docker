@@ -10,7 +10,7 @@ RUN apt-get install -y sudo
 WORKDIR /root
 RUN git clone https://github.com/geekgit/linux_scripts_meta
 WORKDIR /root/linux_scripts_meta
-RUN ./download-all.sh
+RUN ./download-container.sh
 WORKDIR /root
 # x265 & fdk
 RUN apt-get install -y libx265-dev libfdk-aac-dev
