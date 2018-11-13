@@ -21,5 +21,21 @@ RUN autoreconf -i
 RUN echo "configure log" > /home/build/configure.log
 RUN ./configure >> /home/build/configure.log
 RUN make -j$(nproc --all)
-RUN ls -l
+USER root
+WORKDIR /root
+RUN mkdir -p /root/pcem-opt/DEBIAN
+RUN mkdir -p /root/pcem-opt/opt/pcem-opt/bin
+WORKDIR /root/pcem-opt/DEBIAN
+ADD control control
+WORKDIR /root/pcem-opt/opt/pcem-opt/bin
+RUN cp /home/build/pcem/pcem .
+RUN chown root:root pcem
+RUN chmod a+rx-w pcem
+WORKDIR /root
+RUN dpkg-deb --build pcem-opt
+RUN cp pcem-opt.deb /home/build/
+RUN chmod a+rwx /home/build/pcem-opt.deb
+RUN chown build:build /home/build/pcem-opt.deb
+WORKDIR /home/build
+USER build
 ENTRYPOINT ["/bin/bash"]

@@ -15,6 +15,7 @@ echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
 docker cp $ID:/home/build/configure.log $HOME/$ContainerName-share/configure.log
 docker cp $ID:/home/build/pcem/pcem $HOME/$ContainerName-share/pcem
+docker cp $ID:/home/build/pcem-opt.deb $HOME/$ContainerName-share/pcem-opt.deb
 echo "docker removing container..."
 docker rm -v $ID
 echo "container removed."
