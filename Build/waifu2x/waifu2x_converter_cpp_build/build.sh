@@ -13,6 +13,7 @@ ID=$(docker create $ContainerName)
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
 docker cp $ID:/home/build/waifu2x-cpp-opt.deb $HOME/$ContainerName-share/waifu2x-cpp-opt.deb
+docker cp $ID:/home/build/waifu2x-opencv.deb $HOME/$ContainerName-share/waifu2x-opencv.deb
 echo "docker removing container..."
 docker rm -v $ID
 echo "container removed."

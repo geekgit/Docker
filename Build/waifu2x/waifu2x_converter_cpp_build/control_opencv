@@ -1,0 +1,7 @@
+Package: waifu2x-opencv
+Architecture: amd64
+Maintainer: geekgit
+Priority: optional
+Version: 3.0.0
+Depends: libpng12-0
+Description: custom waifu2x-opencv build
