@@ -39,9 +39,11 @@ RUN yes | ./sdkmanager "ndk-bundle"
 RUN yes | ./sdkmanager --licenses
 ENV BinPath "/android_sdk/sdk-tools-linux-4333796/tools/bin"
 ENV ToolsPath "/android_sdk/sdk-tools-linux-4333796/tools"
+ENV ANDROID_HOME "/android_sdk/sdk-tools-linux-4333796"
 RUN echo "Old PATH: ${PATH}"
 ENV PATH "${BinPath}:${PATH}"
 ENV PATH "${ToolsPath}:${PATH}"
+ENV PATH "${ANDROID_HOME}:${PATH}"
 RUN echo "New PATH: ${PATH}"
 WORKDIR /home/build
 RUN sdkmanager --list
