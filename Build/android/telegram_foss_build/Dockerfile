@@ -93,4 +93,14 @@ RUN echo "APP_HASH = aaaaaaaabbbbbbccccccfffffff001122" >> API_KEYS
 ENV ANDROID_HOME "/android_sdk/sdk-tools-linux-4333796"
 RUN ./gradlew assembleAfatRelease; exit 0;
 RUN ./gradlew assembleAfatRelease; exit 0;
+RUN rm -rf "${ANDROID_HOME}/ndk-bundle"
+RUN cp -R "${NDK16_root}" "${ANDROID_HOME}/ndk-bundle"
+RUN ./gradlew assembleAfatRelease; exit 0;
+# result: /home/build/Telegram-FOSS/TMessagesProj/build/outputs/apk/afat/release/TMessagesProj-afat-release-unsigned.apk
+RUN cp /home/build/Telegram-FOSS/TMessagesProj/build/outputs/apk/afat/release/TMessagesProj-afat-release-unsigned.apk /home/build/Telegram.apk
+USER root
+RUN chmod a+rwx /home/build/Telegram.apk
+RUN chown build:build /home/build/Telegram.apk
+USER build
+WORKDIR /home/build
 ENTRYPOINT ["/bin/bash"]
