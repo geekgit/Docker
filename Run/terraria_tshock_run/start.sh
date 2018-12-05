@@ -9,4 +9,5 @@ echo "building image..."
 echo "docker build -t $Basename $CurrPath"
 docker build -t $ContainerName $CurrPath
 echo "starting container..."
+mkdir -p world
 docker run -ti --rm -p 7777:7777 -v $CurrPath/world:/home/terraria/world "$ContainerName" 
