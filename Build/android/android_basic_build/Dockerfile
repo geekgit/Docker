@@ -15,4 +15,34 @@ WORKDIR /root
 RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
+# java 
+USER root
+RUN apt-get install -y java-common locales
+RUN yes | geekgit-install-java
+USER build
+RUN java -version
+# android sdk
+USER root
+ENV AndroidSdkPath "/android_sdk"
+ENV SdkVar "sdk-tools-linux-4333796"
+RUN mkdir -p "${AndroidSdkPath}"
+RUN chown -R build:build "${AndroidSdkPath}"
+RUN chmod -R a+rwx "${AndroidSdkPath}"
+USER build
+WORKDIR "${AndroidSdkPath}"
+RUN wget --secure-protocol=TLSv1_2 --https-only "https://dl.google.com/android/repository/${SdkVar}.zip"
+RUN unzip -d "${SdkVar}" "${SdkVar}.zip"
+WORKDIR "${AndroidSdkPath}/${SdkVar}/tools/bin"
+RUN yes | ./sdkmanager --update
+RUN yes | ./sdkmanager "platforms;android-28" "build-tools;28.0.3" "extras;google;m2repository" "extras;android;m2repository"
+RUN yes | ./sdkmanager "ndk-bundle"
+RUN yes | ./sdkmanager --licenses
+ENV BinPath "/android_sdk/sdk-tools-linux-4333796/tools/bin"
+ENV ToolsPath "/android_sdk/sdk-tools-linux-4333796/tools"
+RUN echo "Old PATH: ${PATH}"
+ENV PATH "${BinPath}:${PATH}"
+ENV PATH "${ToolsPath}:${PATH}"
+RUN echo "New PATH: ${PATH}"
+WORKDIR /home/build
+RUN sdkmanager --list
 ENTRYPOINT ["/bin/bash"]
