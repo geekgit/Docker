@@ -91,5 +91,6 @@ WORKDIR /home/build/Telegram-FOSS
 RUN echo "APP_ID = 12345" > API_KEYS
 RUN echo "APP_HASH = aaaaaaaabbbbbbccccccfffffff001122" >> API_KEYS
 ENV ANDROID_HOME "/android_sdk/sdk-tools-linux-4333796"
-RUN ./gradlew assembleAfatRelease; exit 1;
+RUN ./gradlew assembleAfatRelease; exit 0;
+RUN ./gradlew assembleAfatRelease; exit 0;
 ENTRYPOINT ["/bin/bash"]
