@@ -1,10 +1,13 @@
 FROM ubuntu:18.04
 MAINTAINER geekgit
+RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
 RUN apt-get update
 RUN apt-get install -y build-essential unzip wget gnupg git mercurial meld
 RUN apt-get install -y autoconf automake build-essential
 RUN apt-get install -y sudo
+RUN apt-get install -y cmake golang-go
+RUN apt-get install -y libncurses5:i386 libstdc++6:i386 zlib1g:i386 ant gradle
 # Under construction
 # geekgit linux_scripts_meta install
 WORKDIR /root
@@ -40,6 +43,7 @@ RUN yes | ./sdkmanager --licenses
 ENV BinPath "/android_sdk/sdk-tools-linux-4333796/tools/bin"
 ENV ToolsPath "/android_sdk/sdk-tools-linux-4333796/tools"
 ENV ANDROID_HOME "/android_sdk/sdk-tools-linux-4333796"
+ENV ANDROID_NDK_HOME "${ANDROID_HOME}/ndk-bundle"
 RUN echo "Old PATH: ${PATH}"
 ENV PATH "${BinPath}:${PATH}"
 ENV PATH "${ToolsPath}:${PATH}"
