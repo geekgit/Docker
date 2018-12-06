@@ -5,6 +5,7 @@ RUN apt-get update
 RUN apt-get install -y build-essential unzip wget gnupg git mercurial meld
 RUN apt-get install -y autoconf automake build-essential
 RUN apt-get install -y sudo
+RUN apt-get install -y cmake golang-go
 # Under construction
 # geekgit linux_scripts_meta install
 WORKDIR /root
@@ -39,9 +40,11 @@ RUN yes | ./sdkmanager "ndk-bundle"
 RUN yes | ./sdkmanager --licenses
 ENV BinPath "/android_sdk/sdk-tools-linux-4333796/tools/bin"
 ENV ToolsPath "/android_sdk/sdk-tools-linux-4333796/tools"
+ENV ANDROID_HOME "/android_sdk/sdk-tools-linux-4333796"
 RUN echo "Old PATH: ${PATH}"
 ENV PATH "${BinPath}:${PATH}"
 ENV PATH "${ToolsPath}:${PATH}"
+ENV PATH "${ANDROID_HOME}:${PATH}"
 RUN echo "New PATH: ${PATH}"
 WORKDIR /home/build
 RUN sdkmanager --list
@@ -58,6 +61,8 @@ RUN wget --secure-protocol=TLSv1_2 --https-only "https://dl.google.com/android/r
 RUN unzip -d "NDK16" android-ndk-r16b-linux-x86_64.zip
 ENV NDK16_root "/android_ndk_16/NDK16/android-ndk-r16b"
 ENV NDK "${NDK16_root}"
+RUN rm -rf "${ANDROID_HOME}/ndk-bundle"
+RUN cp -R "${NDK16_root}" "${ANDROID_HOME}/ndk-bundle"
 # ninja
 USER root
 WORKDIR /
@@ -68,7 +73,7 @@ RUN chmod -R a+rwx "${ninja}"
 WORKDIR "${ninja}"
 ENV NinjaVer 1.8.2
 USER build
-RUN wget "https://github.com/ninja-build/ninja/releases/download/v${NinjaVer}/ninja-linux.zip" -O "ninja-linux-v${NinjaVer}.zip"
+RUN wget --secure-protocol=TLSv1_2 --https-only "https://github.com/ninja-build/ninja/releases/download/v${NinjaVer}/ninja-linux.zip" -O "ninja-linux-v${NinjaVer}.zip"
 RUN unzip -d "v${NinjaVer}" "ninja-linux-v${NinjaVer}.zip"
 ENV NINJA_PATH_ROOT /ninja/v1.8.2
 ENV NINJA_PATH /ninja/v1.8.2/ninja
@@ -79,23 +84,11 @@ RUN git clone --recursive https://github.com/Telegram-FOSS-Team/Telegram-FOSS
 WORKDIR /home/build/Telegram-FOSS/TMessagesProj/jni
 RUN ./build_ffmpeg_clang.sh
 RUN ./patch_boringssl.sh
-# cmake, system ninja and golang-go
-USER root
-RUN apt-get install -y cmake ninja-build golang-go
-USER build
-#
-#ENV LC_ALL C
-ENV NINJA_PATH "/usr/bin/ninja"
 RUN ./build_boringssl.sh
 WORKDIR /home/build/Telegram-FOSS
 RUN echo "APP_ID = 12345" > API_KEYS
 RUN echo "APP_HASH = aaaaaaaabbbbbbccccccfffffff001122" >> API_KEYS
-ENV ANDROID_HOME "/android_sdk/sdk-tools-linux-4333796"
-RUN ./gradlew assembleAfatRelease; exit 0;
-RUN ./gradlew assembleAfatRelease; exit 0;
-RUN rm -rf "${ANDROID_HOME}/ndk-bundle"
-RUN cp -R "${NDK16_root}" "${ANDROID_HOME}/ndk-bundle"
-RUN ./gradlew assembleAfatRelease; exit 0;
+RUN ./gradlew assembleAfatRelease
 # result: /home/build/Telegram-FOSS/TMessagesProj/build/outputs/apk/afat/release/TMessagesProj-afat-release-unsigned.apk
 RUN cp /home/build/Telegram-FOSS/TMessagesProj/build/outputs/apk/afat/release/TMessagesProj-afat-release-unsigned.apk /home/build/Telegram.apk
 USER root
