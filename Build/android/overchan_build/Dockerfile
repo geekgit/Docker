@@ -76,7 +76,7 @@ USER build
 RUN wget --secure-protocol=TLSv1_2 --https-only "https://downloads.gradle.org/distributions/gradle-2.2.1-all.zip"
 RUN unzip -d "gradle" gradle-2.2.1-all.zip
 WORKDIR /home/build
-RUN git clone https://github.com/miku-nyan/Overchan-Android
+RUN git clone https://github.com/geekgit/Overchan-Android
 WORKDIR /home/build/Overchan-Android
 RUN yes | sdkmanager "platforms;android-23" "build-tools;23.0.2"
 USER root

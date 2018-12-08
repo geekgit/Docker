@@ -80,7 +80,7 @@ ENV NINJA_PATH /ninja/v1.8.2/ninja
 ENV PATH "${NINJA_PATH_ROOT}:${PATH}"
 USER build
 WORKDIR /home/build
-RUN git clone --recursive https://github.com/Telegram-FOSS-Team/Telegram-FOSS
+RUN git clone --recursive https://github.com/geekgit/Telegram-FOSS
 WORKDIR /home/build/Telegram-FOSS/TMessagesProj/jni
 RUN ./build_ffmpeg_clang.sh
 RUN ./patch_boringssl.sh
