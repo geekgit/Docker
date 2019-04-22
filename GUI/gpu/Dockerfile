@@ -30,4 +30,9 @@ WORKDIR /home/gpu
 RUN git clone https://github.com/NVIDIA/cuda-samples
 WORKDIR /home/gpu/cuda-samples/Samples/deviceQuery
 RUN make -j$(nproc --all)
+USER root
+WORKDIR /
+RUN apt-get install -y xterm
+USER gpu
+WORKDIR /home/gpu/cuda-samples/Samples/deviceQuery
 ENTRYPOINT ["/bin/bash"]

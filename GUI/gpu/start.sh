@@ -13,5 +13,4 @@ echo "building image..."
 echo "docker build -t $Basename $CurrPath"
 docker build -t $ContainerName $CurrPath
 echo "starting container..."
-mkdir -p ./gpu_data/home/gpu
-docker run -ti --rm -e DISPLAY="${XPort}" -v /tmp/.X11-unix:/tmp/.X11-unix -v $CurrPath/gpu_data/home/gpu:/home/gpu --device /dev/nvidia0:/dev/nvidia0 --device /dev/nvidiactl:/dev/nvidiactl --device /dev/nvidia-uvm:/dev/nvidia-uvm "$ContainerName" 
+docker run -ti --rm -e DISPLAY="${XPort}" -v /tmp/.X11-unix:/tmp/.X11-unix --device /dev/nvidia0:/dev/nvidia0 --device /dev/nvidiactl:/dev/nvidiactl --device /dev/nvidia-uvm:/dev/nvidia-uvm "$ContainerName" 
