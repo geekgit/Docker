@@ -32,7 +32,24 @@ WORKDIR /home/gpu/cuda-samples/Samples/deviceQuery
 RUN make -j$(nproc --all)
 USER root
 WORKDIR /
-RUN apt-get install -y xterm
+RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y xterm terminator vulkan-utils gnome-shell
+RUN dpkg --add-architecture i386
 USER gpu
-WORKDIR /home/gpu/cuda-samples/Samples/deviceQuery
+WORKDIR /home/gpu
+RUN wget --secure-protocol=TLSv1_2 --https-only "https://dl.winehq.org/wine-builds/winehq.key"
+USER root
+RUN apt-key add winehq.key
+WORKDIR /
+RUN apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+RUN apt-get install --install-recommends -y winehq-stable
+RUN apt-get install -y qmlscene qt5-qmake qt5-default qtdeclarative5-dev qml-module-qtquick-controls qml-module-qtgraphicaleffects qml-module-qtquick-dialogs qml-module-qtquick-localstorage qml-module-qtquick-window2 
+USER gpu
+#WORKDIR /home/gpu/cuda-samples/Samples/deviceQuery
+WORKDIR /home/gpu
+RUN git clone https://github.com/Swordfish90/cool-retro-term
+WORKDIR /home/gpu/cool-retro-term
+RUN git submodule update --init --recursive
+RUN qmake
+RUN make -j$(nproc --all)
+WORKDIR /home/gpu
 ENTRYPOINT ["/bin/bash"]
