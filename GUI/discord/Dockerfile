@@ -8,11 +8,12 @@ WORKDIR /root
 RUN git clone https://github.com/geekgit/linux_scripts_meta
 WORKDIR /root/linux_scripts_meta
 RUN ./download-container.sh
-RUN adduser --disabled-password --gecos '' user
-USER user
-WORKDIR /home/user
+RUN adduser --disabled-password --gecos '' discord
+USER discord
+WORKDIR /home/discord
 RUN wget --secure-protocol=TLSv1_2 --https-only "https://dl.discordapp.net/apps/linux/0.0.9/discord-0.0.9.deb" -O "discord.deb"
 USER root
 RUN dpkg -i discord.deb
-USER user
+USER discord
+WORKDIR /home/discord
 ENTRYPOINT ["/bin/bash"]
