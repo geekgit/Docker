@@ -5,8 +5,11 @@ RUN apt-get install -y adwaita-icon-theme at-spi2-core dconf-gsettings-backend d
 RUN apt-get install -y mesa-utils libx11-xcb1
 RUN apt-get install -y fonts-takao-mincho fonts-takao-gothic fonts-takao
 RUN apt-get install -y fonts-arphic-ukai fonts-arphic-uming fonts-ipafont-mincho fonts-ipafont-gothic fonts-unfonts-core
-#RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
-#RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y ttf-mscorefonts-installer 
+WORKDIR /root
+ADD ttf-mscorefonts-installer.deb ttf-mscorefonts-installer.deb
+RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+RUN apt-get install -y cabextract xfonts-utils update-notifier-common
+RUN env DEBIAN_FRONTEND=noninteractive dpkg -i ttf-mscorefonts-installer.deb
 # geekgit linux_scripts_meta install
 WORKDIR /root
 RUN git clone https://github.com/geekgit/linux_scripts_meta
