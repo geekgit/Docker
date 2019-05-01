@@ -15,5 +15,6 @@ USER messenger
 WORKDIR /home/messenger
 ENV USER messenger
 ENV FONTCONFIG_PATH=/etc/fonts
+ENV QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb
 RUN geekgit-install-messenger
 ENTRYPOINT ["/bin/bash"]
