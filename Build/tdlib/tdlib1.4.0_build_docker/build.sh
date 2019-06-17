@@ -12,7 +12,8 @@ echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
-docker cp $ID:/home/build/tdlib.7z $HOME/$ContainerName-share/tdlib.7z
+docker cp $ID:/home/build/libtdjson.so.1.4.0 $HOME/$ContainerName-share/libtdjson.so.1.4.0
+docker cp $ID:/home/build/tg_cli $HOME/$ContainerName-share/tg_cli
 echo "docker removing container..."
 docker rm -v $ID
 echo "container removed."

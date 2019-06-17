@@ -26,7 +26,13 @@ RUN mkdir build
 WORKDIR /home/build/tdlib/td-$TdlibVersion/build
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
 RUN cmake --build . -- -j $(expr $(nproc --all) / 2)
-WORKDIR /home/build/tdlib/td-$TdlibVersion
-RUN 7z a -t7z -mx9 tdlib.7z build
-RUN mv tdlib.7z /home/build
+WORKDIR /home/build
+USER root
+RUN cp /home/build/tdlib/td-$TdlibVersion/build/libtdjson.so.$TdlibVersion .
+RUN chmod a+rwx libtdjson.so.$TdlibVersion
+RUN chown build:build libtdjson.so.$TdlibVersion
+RUN cp /home/build/tdlib/td-$TdlibVersion/build/tg_cli .
+RUN chmod a+rwx tg_cli
+RUN chown build:build tg_cli
+USER build
 ENTRYPOINT ["/bin/bash"]
