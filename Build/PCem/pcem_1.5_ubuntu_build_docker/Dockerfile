@@ -15,8 +15,8 @@ WORKDIR /root
 RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
-ENV verA 13
-ENV verB 1.3
+ENV verA 15
+ENV verB 1.5
 RUN wget --secure-protocol=TLSv1_2 --https-only "https://pcem-emulator.co.uk/files/PCemV${verA}Linux.tar.gz" -O "PCemV${verA}Linux.tar.gz"
 RUN mkdir -p /home/build/pcem
 RUN tar xvf "PCemV${verA}Linux.tar.gz" -C /home/build/pcem

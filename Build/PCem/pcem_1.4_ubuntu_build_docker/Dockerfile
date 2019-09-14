@@ -10,14 +10,16 @@ RUN apt-get install -y sudo
 WORKDIR /root
 RUN git clone https://github.com/geekgit/linux_scripts_meta
 WORKDIR /root/linux_scripts_meta
-RUN ./download-container.sh
+RUN ./download-container-bionic.sh
 WORKDIR /root
 RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
-RUN wget --secure-protocol=TLSv1_2 --https-only "https://pcem-emulator.co.uk/files/PCemV14Linux.tar.gz" -O PCemV14Linux.tar.gz
+ENV verA 14
+ENV verB 1.4
+RUN wget --secure-protocol=TLSv1_2 --https-only "https://pcem-emulator.co.uk/files/PCemV${verA}Linux.tar.gz" -O "PCemV${verA}Linux.tar.gz"
 RUN mkdir -p /home/build/pcem
-RUN tar xvf PCemV14Linux.tar.gz -C /home/build/pcem
+RUN tar xvf "PCemV${verA}Linux.tar.gz" -C /home/build/pcem
 WORKDIR /home/build/pcem
 RUN autoreconf -i
 RUN echo "configure log" > /home/build/configure.log
@@ -25,7 +27,7 @@ RUN ./configure >> /home/build/configure.log
 RUN make -j$(nproc --all)
 USER root
 WORKDIR /root
-ENV pcemName "pcem1.4-opt"
+ENV pcemName "pcem${verB}-opt"
 RUN mkdir -p /root/${pcemName}/DEBIAN
 RUN mkdir -p /root/${pcemName}/opt/${pcemName}/bin
 WORKDIR /root/${pcemName}/DEBIAN
