@@ -12,7 +12,7 @@ echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
-docker cp $ID:/home/build/ffmpeg4.0.2-opt.deb $HOME/$ContainerName-share/ffmpeg4.0.2-opt.deb
+docker cp $ID:/home/build/ffmpeg4.2.2-opt.deb $HOME/$ContainerName-share/ffmpeg4.2.2-opt.deb
 docker cp $ID:/home/build/gpg-check-log.txt $HOME/$ContainerName-share/gpg-check-log.txt
 docker cp $ID:/home/build/configure-log.txt $HOME/$ContainerName-share/configure-log.txt
 docker cp $ID:/home/build/ffmpeg-file-log.txt $HOME/$ContainerName-share/ffmpeg-file-log.txt

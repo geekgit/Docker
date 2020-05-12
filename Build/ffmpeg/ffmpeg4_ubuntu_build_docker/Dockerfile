@@ -30,12 +30,9 @@ RUN adduser --disabled-password --gecos '' build
 USER build
 WORKDIR /home/build
 # ffmpeg key
-#RUN gpg --keyserver x-hkp://pool.sks-keyservers.net --recv-keys 0xD67658D8
-USER root
-RUN apt-get install -y curl
 USER build
-RUN curl "https://pgp.mit.edu/pks/lookup?op=get&search=0xB4322F04D67658D8" -o - | gpg --import
-ENV digitVersion 4.0.2
+RUN gpg --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 0xD67658D8
+ENV digitVersion 4.2.2
 ENV ffmpegVersion ffmpeg-$digitVersion
 RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffmpegVersion.tar.gz -O $ffmpegVersion.tar.gz
 RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffmpegVersion.tar.gz.asc -O $ffmpegVersion.tar.gz.asc

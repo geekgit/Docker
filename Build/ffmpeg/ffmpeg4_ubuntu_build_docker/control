@@ -1,6 +1,6 @@
-Package: ffmpeg4.0.2-opt
+Package: ffmpeg4.2.2-opt
 Architecture: amd64
 Maintainer: geekgit
 Priority: optional
-Version: 4.0.2
-Description: custom ffmpeg 4.0.2 build (ubuntu)
+Version: 4.2.2
+Description: custom ffmpeg 4.2.2 build (ubuntu)
