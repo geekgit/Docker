@@ -28,4 +28,9 @@ RUN mkdir build
 WORKDIR /home/build/OpenXcom/build
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DDEV_BUILD=OFF -DBUILD_PACKAGE=OFF
 RUN make -j$(nproc --all)
+WORKDIR /home/build/OpenXcom/build/bin
+RUN echo "#!/bin/bash" > install-dev-deps.sh
+RUN echo "sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y libboost-dev libsdl1.2-dev libsdl-mixer1.2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev libyaml-cpp-dev" >> install-dev-deps.sh
+RUN chmod a+rwx install-dev-deps.sh
+RUN tar -zcvf /home/build/oxce.tar.gz *
 ENTRYPOINT ["/bin/bash"]
