@@ -5,36 +5,23 @@ RUN apt-get install -y build-essential unzip wget gnupg git
 RUN apt-get install -y autoconf automake build-essential libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo zlib1g-dev
 RUN apt-get install -y yasm libx264-dev cmake mercurial libmp3lame-dev libopus-dev libvpx-dev
 RUN apt-get install -y sudo
-# Under construction
-# geekgit linux_scripts_meta install
-#WORKDIR /root
-#RUN git clone https://github.com/geekgit/linux_scripts_meta
-#WORKDIR /root/linux_scripts_meta
-#RUN ./download-container.sh
 WORKDIR /root
-## x265 & fdk
-#RUN apt-get install -y libx265-dev libfdk-aac-dev
-#RUN apt-get -y install dkms
-#RUN adduser --disabled-password --gecos '' build
-#USER build
-#WORKDIR /home/build
+# x265 & fdk
+RUN apt-get install -y libx265-dev libfdk-aac-dev
+RUN apt-get -y install dkms
+RUN adduser --disabled-password --gecos '' build
+USER build
+WORKDIR /home/build
 # ffmpeg key
-#USER build
-#RUN gpg --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 0xD67658D8
-#ENV digitVersion 4.2.2
-#ENV ffmpegVersion ffmpeg-$digitVersion
-#RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffmpegVersion.tar.gz -O $ffmpegVersion.tar.gz
-#RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffmpegVersion.tar.gz.asc -O $ffmpegVersion.tar.gz.asc
-#RUN gpg --verify $ffmpegVersion.tar.gz.asc $ffmpegVersion.tar.gz 2> /home/build/gpg-check-log.txt
-#RUN tar zvxf $ffmpegVersion.tar.gz
-# headers
-#RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers
-#WORKDIR /home/build/nv-codec-headers
-#RUN make -j$(nproc --all)
-#USER root
-#RUN make install
-#USER build
-#WORKDIR /home/build/$ffmpegVersion
+USER build
+RUN gpg --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 0xD67658D8
+ENV digitVersion 4.4
+ENV ffmpegVersion ffmpeg-$digitVersion
+RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffmpegVersion.tar.gz -O $ffmpegVersion.tar.gz
+RUN wget --secure-protocol=TLSv1_2 --https-only https://ffmpeg.org/releases/$ffmpegVersion.tar.gz.asc -O $ffmpegVersion.tar.gz.asc
+RUN gpg --verify $ffmpegVersion.tar.gz.asc $ffmpegVersion.tar.gz 2> /home/build/gpg-check-log.txt
+RUN tar zvxf $ffmpegVersion.tar.gz
+WORKDIR /home/build/$ffmpegVersion
 #USER root
 #RUN add-apt-repository -y ppa:mc3man/mpv-tests && apt-get update && apt-get upgrade -y
 #RUN apt-get install -y libdav1d-dev
