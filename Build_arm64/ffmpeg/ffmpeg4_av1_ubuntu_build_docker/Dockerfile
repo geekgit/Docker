@@ -40,9 +40,9 @@ WORKDIR /root
 #RUN apt-get install -y libdav1d-dev
 #USER build
 #RUN ./configure --prefix=/opt/$ffmpegVersion-av1-opt --pkg-config-flags="--static" --libdir=/usr/local/lib --enable-static --disable-shared \
---enable-gpl --enable-nonfree --enable-libx264 --enable-libfdk-aac \
---enable-libmp3lame --enable-libass --enable-libfreetype \
---enable-runtime-cpudetect --enable-libdav1d 1>/home/build/configure-log.txt
+#--enable-gpl --enable-nonfree --enable-libx264 --enable-libfdk-aac \
+#--enable-libmp3lame --enable-libass --enable-libfreetype \
+#--enable-runtime-cpudetect --enable-libdav1d 1>/home/build/configure-log.txt
 #RUN cat /home/build/gpg-check-log.txt
 #RUN cat /home/build/configure-log.txt
 #RUN make -j$(nproc --all)
