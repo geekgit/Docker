@@ -7,10 +7,10 @@ RUN apt-get install -y yasm libx264-dev cmake mercurial libmp3lame-dev libopus-d
 RUN apt-get install -y sudo
 # Under construction
 # geekgit linux_scripts_meta install
-WORKDIR /root
-RUN git clone https://github.com/geekgit/linux_scripts_meta
-WORKDIR /root/linux_scripts_meta
-RUN ./download-container.sh
+#WORKDIR /root
+#RUN git clone https://github.com/geekgit/linux_scripts_meta
+#WORKDIR /root/linux_scripts_meta
+#RUN ./download-container.sh
 WORKDIR /root
 ## x265 & fdk
 #RUN apt-get install -y libx265-dev libfdk-aac-dev
