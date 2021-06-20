@@ -12,8 +12,9 @@ RUN git clone https://github.com/geekgit/linux_scripts_meta
 WORKDIR /root/linux_scripts_meta
 RUN ./download-container.sh
 WORKDIR /root
-## x265 & fdk
+# x265 & fdk
 #RUN apt-get install -y libx265-dev libfdk-aac-dev
+
 #RUN apt-get -y install dkms
 #RUN adduser --disabled-password --gecos '' build
 #USER build
