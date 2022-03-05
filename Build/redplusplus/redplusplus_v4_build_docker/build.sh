@@ -12,7 +12,7 @@ echo "starting container..."
 ID=$(docker create $ContainerName)
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
-docker cp $ID:/home/build/RedPlusPlus/redplusplus-3.0.0-beta.gbc $HOME/$ContainerName-share/redplusplus-3.0.0-beta.gbc
+docker cp $ID:/home/build/RedPlusPlus/redplusplus-4.0.0-beta.gbc $HOME/$ContainerName-share/redplusplus-4.0.0-beta.gbc
 echo "go and checksum check"
 cd "$HOME/$ContainerName-share"
 geekgit-md5-calculate *.gbc

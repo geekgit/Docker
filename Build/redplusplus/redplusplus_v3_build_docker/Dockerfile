@@ -16,7 +16,9 @@ USER root
 RUN make install
 USER build
 WORKDIR /home/build
-RUN git clone --recursive https://github.com/TheFakeMateo/RedPlusPlus
+#RUN git clone --recursive https://github.com/TheFakeMateo/RedPlusPlus
+RUN git clone --recursive https://github.com/JustRegularLuna/rpp-backup
+RUN mv rpp-backup RedPlusPlus
 WORKDIR /home/build/RedPlusPlus
 RUN git submodule init
 RUN git submodule update
