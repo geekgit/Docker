@@ -17,8 +17,9 @@ RUN patch -p0 -i ../00-qemu620-mesa-glide.patch
 RUN bash /home/build/qemu-3dfx/scripts/sign_commit
 RUN mkdir /home/build/qemu-3dfx/build
 WORKDIR /home/build/qemu-3dfx/build
-RUN /home/build/qemu-3dfx/qemu-6.2.0/configure
+RUN /home/build/qemu-3dfx/qemu-6.2.0/configure --target-list=i386-softmmu
 RUN make -j$(nproc --all)
 WORKDIR /home/build
 USER build
+RUN tar cvzf qemu-3dfx.tar.gz qemu-3dfx/
 ENTRYPOINT ["/bin/bash"]
