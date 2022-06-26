@@ -2,6 +2,7 @@ FROM debian:sid
 MAINTAINER geekgit
 RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
 RUN apt-get install -y tar p7zip p7zip-full git sudo wget
+RUN apt-get install -y procps bc
 # geekgit linux_scripts_meta install
 WORKDIR /root
 RUN git clone https://github.com/geekgit/linux_scripts_meta
