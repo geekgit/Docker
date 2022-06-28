@@ -13,7 +13,8 @@ ID=$(docker create $ContainerName)
 echo "ID: ${ID}"
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
-docker cp $ID:/home/build/fceux/src/fceux $HOME/$ContainerName-share/fceux
+docker cp $ID:/home/build/fceux_focal/src/fceux $HOME/$ContainerName-share/fceux-focal
+docker cp $ID:/home/build/fceux-focal.deb $HOME/$ContainerName-share/fceux-focal.deb
 cp $CurrPath/install_dev.sh $HOME/$ContainerName-share/
 echo "docker removing container..."
 docker rm -v $ID
