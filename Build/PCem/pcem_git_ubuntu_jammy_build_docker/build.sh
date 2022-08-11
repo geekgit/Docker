@@ -13,9 +13,8 @@ ID=$(docker create $ContainerName)
 echo "ID: ${ID}"
 echo "docker copying files..."
 mkdir $HOME/$ContainerName-share
-docker cp $ID:/home/build/configure.log $HOME/$ContainerName-share/configure.log
-docker cp $ID:/home/build/pcem/pcem $HOME/$ContainerName-share/pcem
-docker cp $ID:/home/build/pcem1.7-opt.deb $HOME/$ContainerName-share/pcem1.7-opt.deb
+docker cp $ID:/home/build/pcem/src/pcem $HOME/$ContainerName-share/pcem
+cp $CurrPath/install_dev.sh $HOME/$ContainerName-share/
 echo "docker removing container..."
 docker rm -v $ID
 echo "container removed."

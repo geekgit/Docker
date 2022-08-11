@@ -1,10 +1,13 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 MAINTAINER geekgit
 RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
 RUN apt-get install -y build-essential unzip wget gnupg git mercurial meld
 RUN apt-get install -y autoconf automake build-essential
-RUN apt-get install -y libsdl2-dev libwxbase3.0-dev libwxgtk-media3.0-dev libwxgtk-media3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libwxgtk3.0-dev libwxgtk3.0-gtk3-dev libalut-dev libopenal-dev
+RUN apt-get install -y libsdl2-dev libalut-dev libopenal-dev
 RUN apt-get install -y sudo
+RUN apt-get install -y ninja-build cmake
+RUN apt-get install -y libwxbase3.0-dev libwxgtk-media3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libwxgtk3.0-gtk3-dev
+RUN apt-get install -y uuid-runtime
 # Under construction
 # geekgit linux_scripts_meta install
 WORKDIR /root
@@ -17,14 +20,11 @@ USER build
 WORKDIR /home/build
 ENV verA 17
 ENV verB 1.7
-RUN wget --secure-protocol=TLSv1_2 --https-only "https://pcem-emulator.co.uk/files/PCemV${verA}Linux.tar.gz" -O "PCemV${verA}Linux.tar.gz"
-RUN mkdir -p /home/build/pcem
-RUN tar xvf "PCemV${verA}Linux.tar.gz" -C /home/build/pcem
+RUN git clone --branch dev https://github.com/sarah-walker-pcem/pcem
 WORKDIR /home/build/pcem
-RUN autoreconf -i
-RUN echo "configure log" > /home/build/configure.log
-RUN ./configure >> /home/build/configure.log
-RUN make -j$(nproc --all)
+RUN git reset --hard 1a6e20b6d5ca77ba96982a5961b82df74a182cc3
+RUN cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release .
+RUN ninja
 USER root
 WORKDIR /root
 ENV pcemName "pcem${verB}-opt"
@@ -33,7 +33,7 @@ RUN mkdir -p /root/${pcemName}/opt/${pcemName}/bin
 WORKDIR /root/${pcemName}/DEBIAN
 ADD control control
 WORKDIR /root/${pcemName}/opt/${pcemName}/bin
-RUN cp /home/build/pcem/pcem .
+RUN cp /home/build/pcem/src/pcem .
 RUN chown root:root pcem
 RUN chmod a+rx-w pcem
 WORKDIR /root
