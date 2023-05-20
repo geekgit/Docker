@@ -1,7 +1,0 @@
-Package: 3proxy-opt
-Architecture: amd64
-Maintainer: geekgit
-Priority: optional
-Version: 0.8.11
-Depends: libc6
-Description: custom 3proxy build for xenial

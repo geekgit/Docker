@@ -1,6 +1,0 @@
-Package: libpng16-opt
-Architecture: amd64
-Maintainer: geekgit
-Priority: optional
-Version: 1.60.20
-Description: custom libpng 1.6.20 build

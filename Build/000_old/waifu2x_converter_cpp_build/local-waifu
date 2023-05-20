@@ -1,5 +1,0 @@
-#!/bin/bash
-InputFile="$1"
-OutputFile="waifu2x_${InputFile}.png"
-waifu2x-converter-cpp --model_dir /opt/waifu/etc/models --noise_level 2 --scale_ratio 2.0 -i "${InputFile}" -o "${OutputFile}"
-

@@ -1,7 +1,0 @@
-Package: pcem1.6-opt
-Architecture: amd64
-Maintainer: geekgit
-Priority: optional
-Version: 1.6
-Depends: libsdl2-2.0-0, libwxbase3.0-0v5, libwxgtk-media3.0-0v5, libwxgtk-media3.0-gtk3-0v5, libwxgtk-webview3.0-gtk3-0v5, libwxgtk3.0-0v5, libwxgtk3.0-gtk3-0v5, libopenal1
-Description: custom pcem 1.6 build

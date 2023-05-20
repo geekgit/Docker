@@ -1,6 +1,0 @@
-Package: ffmpeg4.4-av1-opt
-Architecture: arm64
-Maintainer: geekgit
-Priority: optional
-Version: 4.4
-Description: custom ffmpeg 4.4 build (ubuntu, AV1)

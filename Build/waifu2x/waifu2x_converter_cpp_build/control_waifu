@@ -1,7 +1,0 @@
-Package: waifu2x-cpp-opt
-Architecture: amd64
-Maintainer: geekgit
-Priority: optional
-Version: 1.0.0
-Depends: libpng12-0
-Description: custom waifu2x-cpp build

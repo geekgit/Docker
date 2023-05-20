@@ -1,9 +1,0 @@
-[Unit]
-Description=dnscrypt
-After=network.target iptables.service firewalld.service
-
-[Service]
-ExecStart=/bin/dnscrypt-start
-
-[Install]
-WantedBy=multi-user.target

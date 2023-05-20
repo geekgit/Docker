@@ -1,1 +1,0 @@
-docker run -ti --rm win_dev_docker powershell
